@@ -7,7 +7,7 @@ describe UstidnrValidator::RpcClient do
     it "should raise an error when owner_ustid is not set" do
       expect do
         UstidnrValidator::RpcClient.fetch('')
-      end.to raise_error("owner_ustid is not set")
+      end.to raise_error(/owner_ustid is not set/)
     end
   end
 end
