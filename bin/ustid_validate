@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+# coding: utf-8
+$:.unshift File.expand_path(File.join(File.dirname(__FILE__), '../lib'))
+require File.expand_path(File.join(File.dirname(__FILE__), '../lib/ustidnr_validator'))
+
+owner_ustid    = ARGV[0]
+customer_ustid = ARGV[1]
+company_name   = ARGV[2]
+city           = ARGV[3]
+plz            = ARGV[4]
+street         = ARGV[5]
+print          = ARGV[6]
+
+UstidnrValidator.owner_ustid = owner_ustid
+UstidnrValidator.log_dir = 'out.log'
+company = UstidnrValidator::Company.build :ust_id_nr => customer_ustid, :name => company_name, :city => city, :plz => plz, :street => street, :print => print
+
+if company.valid?
+  puts "OK"
+else
+  puts "ERROR: #{company.errors.full_messages.join("\n") }"
+end
+
+
+
