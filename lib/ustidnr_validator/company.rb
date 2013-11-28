@@ -11,6 +11,10 @@ module UstidnrValidator
       {:ust_id_nr => ust_id_nr, :company_name => name, :city => city, :plz => plz, :street => street, :print => ('ja' if print.present?) }
     end
 
+    def persisted?
+      false
+    end
+
     def valid?
       valdiate_empty
       validate if errors.count.zero?

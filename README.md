@@ -1,6 +1,7 @@
 # UstidnrValidator
 
 This is simple wraper for the xmlrpc https://evatr.bff-online.de/eVatR/xmlrpc/
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -15,9 +16,26 @@ Or install it yourself as:
 
     $ gem install ustidnr_validator
 
+## Config
+
+set your own USt-IdNr
+
+    UstidnrValidator.owner_ustid ='DEXXXXXXXXX'
+
+set your own logger
+
+    UstidnrValidator.external_logger =  Rails.logger
+
 ## Usage
 
-bin/ustidnr_validator 'your_ustid', 'ustid_To_check', 'company_name', 'city'
+from the command line
+
+    bin/ustidnr_validator 'your_ustid', 'ustid_To_check', 'company_name', 'city'
+
+in your application
+
+     company = UstidnrValidator::Company.build :ust_id_nr => "some value", :city => "some value", :name => "some value"
+     company.errors.full_messages.join("\n") unless company.valid?
 
 ## Contributing
 

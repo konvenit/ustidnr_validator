@@ -6,6 +6,9 @@ describe UstidnrValidator::Company do
   let(:company) { UstidnrValidator::Company.build :ust_id_nr => "1234", :name => "Heidelberg City Inn GmbH", :city => "Heidelberg" }
   let(:valid_reponse) { {'ErrorCode' => 200, 'Erg_Ort' => 'A', 'Erg_Name' => 'A'} }
 
+  it "should looks like a rails model" do
+    company.should_not be_persisted
+  end
 
   describe "validate" do
 
