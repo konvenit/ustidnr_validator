@@ -3,7 +3,7 @@
 module UstidnrValidator
   class Base
     def error_codes(code)
-      {
+      default = {
         200 =>  "Die angefragte USt-IdNr. ist gültig.",
         201 =>  "Die angefragte USt-IdNr. ist ungültig.",
         202 =>  "Die angefragte USt-IdNr. ist ungültig. Sie ist nicht in der Unternehmerdatei des betreffenden EU-Mitgliedstaates registriert. Hinweis:Ihr Geschäftspartner kann seine gültige USt-IdNr. bei der für ihn zuständigen Finanzbehörde in Erfahrung bringen. Möglicherweise muss er einen Antrag stellen, damit seine USt-IdNr. in die Datenbank aufgenommen wird.",
@@ -28,15 +28,19 @@ module UstidnrValidator
         221 =>  "Die Anfragedaten enthalten nicht alle notwendigen Parameter oder einen ungültigen Datentyp. Weitere Informationen erhalten Sie bei den Hinweisen zum Schnittstelle - Aufruf.",
         999 =>  "Eine Bearbeitung Ihrer Anfrage ist zurzeit nicht möglich. Bitte versuchen Sie es später noch einmal.",
       }[code.to_i]
+
+      I18n.t(:"ustidnr_validator.error_code.#{code}" , :default => default)
     end
 
     def result_codes(code)
-      {
+      default = {
         'A' => 'stimmt überein',
         'B' => 'stimmt nicht überein',
         'C' => 'von Ihnen nicht angefragt',
         'D' => 'vom Mitgliedstaat nicht mitgeteilt'
       }[code.to_s]
+
+      I18n.t(:"ustidnr_validator.result_code.#{code.to_s}", :default => default)
     end
   end
 end
