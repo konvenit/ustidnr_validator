@@ -28,10 +28,11 @@ module UstidnrValidator
     end
 
     def validate
-      result = UstidnrValidator::RpcClient.fetch(to_request_params)
+      result = UstidnrValidator::RpcClient.fetch(to_request_params) || {}
+
       errors.add :ust_id_nr, error_codes(result['ErrorCode'].to_i) if result['ErrorCode'].to_i != 200
-      errors.add :city,      result_codes(result['Erg_Ort'])       if result['Erg_Ort']   !=  'A'
-      errors.add :name,      result_codes(result['Erg_Name'])      if result['Erg_Name']  != 'A'
+      errors.add :city,      result_codes(result['Erg_Ort'])       if result['Erg_Ort'].present? && result['Erg_Ort']   !=  'A'
+      errors.add :name,      result_codes(result['Erg_Name'])      if result['Erg_Name'].present? && result['Erg_Name'] != 'A'
     end
 
     def self.build(params)

@@ -33,13 +33,13 @@ module UstidnrValidator
     end
 
     def result_codes(code)
+      return '' unless coode
       default = {
         'A' => 'stimmt überein',
         'B' => 'stimmt nicht überein',
         'C' => 'von Ihnen nicht angefragt',
         'D' => 'vom Mitgliedstaat nicht mitgeteilt'
       }[code.to_s]
-
       I18n.t(:"ustidnr_validator.result_code.#{code.to_s}", :default => default)
     end
   end
