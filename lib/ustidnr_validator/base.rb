@@ -33,7 +33,7 @@ module UstidnrValidator
     end
 
     def result_codes(code)
-      return '' unless coode
+      return '' unless code
       default = {
         'A' => 'stimmt überein',
         'B' => 'stimmt nicht überein',
