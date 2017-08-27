@@ -3,7 +3,6 @@ require 'active_support/core_ext/hash'
 
 module UstidnrValidator
   class RpcClient
-
     attr_reader :request_params
 
     def initialize(_request_params={})
@@ -34,5 +33,4 @@ module UstidnrValidator
       client.fetch
     end
   end
-
 end

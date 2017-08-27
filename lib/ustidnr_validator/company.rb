@@ -1,6 +1,5 @@
 module UstidnrValidator
   class Company < UstidnrValidator::Base
-
     include ActiveModel::Validations
     include ActiveModel::Conversion
     extend ActiveModel::Naming

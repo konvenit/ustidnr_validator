@@ -1,15 +1,15 @@
 require "ustidnr_validator/version"
 require "active_model"
-require 'active_support/all'
+require 'active_support'
 require 'logger'
 
-
-require_relative 'ustidnr_validator/base'
-require_relative 'ustidnr_validator/company'
-require_relative 'ustidnr_validator/rpc_client'
-require_relative 'ustidnr_validator/version'
-
 module UstidnrValidator
+  extend ActiveSupport::Autoload
+
+  autoload :Base,      'ustidnr_validator/base'
+  autoload :Company,   'ustidnr_validator/company'
+  autoload :RpcClient, 'ustidnr_validator/rpc_client'
+
   mattr_accessor :owner_ustid
   mattr_accessor :log_dir
   mattr_accessor :external_logger
@@ -19,8 +19,8 @@ module UstidnrValidator
   end
 
   def self.build_logger
-    _log_dir = UstidnrValidator.log_dir.presence || "/dev/null"
-    logger  = Logger.new(_log_dir)
+    _log_dir     = UstidnrValidator.log_dir.presence || "/dev/null"
+    logger       = Logger.new(_log_dir)
     logger.level = Logger::INFO
     logger
   end
