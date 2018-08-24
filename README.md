@@ -1,4 +1,4 @@
-# UstidnrValidator
+# UstidnrValidator [![Build Status](https://travis-ci.com/konvenit/ustidnr_validator.svg?branch=master)](https://travis-ci.com/konvenit/ustidnr_validator)
 
 This is simple wraper for the xmlrpc https://evatr.bff-online.de/eVatR/xmlrpc/
 
