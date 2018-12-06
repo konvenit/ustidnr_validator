@@ -11,6 +11,16 @@ describe UstidnrValidator::Company do
   end
 
   describe "validate" do
+    let(:heidelberg_company) do
+      {
+        ust_id_nr:    "1234",
+        company_name: "Heidelberg City Inn GmbH",
+        city:         "Heidelberg",
+        plz:          nil,
+        street:       nil,
+        print:        nil
+      }
+    end
 
     it "should be valid wihout errors " do
       company.stub(:validate).and_return true
@@ -26,8 +36,15 @@ describe UstidnrValidator::Company do
     end
 
     it "should call the RpcClient " do
-      UstidnrValidator::RpcClient.stub(:fetch).with({:ust_id_nr=>"1234", :company_name=>"Heidelberg City Inn GmbH", :city=>"Heidelberg",:plz=>nil, :street=>nil, :print=>nil}).and_return(valid_reponse)
+      UstidnrValidator::RpcClient.stub(:fetch).with(heidelberg_company).and_return(valid_reponse)
       company.should be_valid
+    end
+
+    it "should be valid for transition TLS 1.2 status " do
+      transition_status = { "ErrorCode" => 222, "Erg_Ort" => "A", "Erg_Name" => "A" }
+
+      UstidnrValidator::RpcClient.stub(:fetch).with(heidelberg_company).and_return(transition_status)
+      expect(company).to be_valid
     end
 
     it "should call the RpcClient with print" do
