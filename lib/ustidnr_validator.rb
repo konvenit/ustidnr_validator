@@ -1,6 +1,6 @@
 require "ustidnr_validator/version"
 require "active_model"
-require 'active_support'
+require "active_support/core_ext/module/attribute_accessors"
 require 'logger'
 
 module UstidnrValidator
