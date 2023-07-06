@@ -7,7 +7,7 @@ module UstidnrValidator
     attr_accessor :ust_id_nr, :name, :city, :plz, :street, :print
 
     def to_request_params
-      {:ust_id_nr => ust_id_nr, :company_name => name, :city => city, :plz => plz, :street => street, :print => ('ja' if print.present?) }
+      { ust_id_nr: ust_id_nr, company_name: name, city: city, plz: plz, street: street, print: ("ja" if print.present?) }
     end
 
     def persisted?
@@ -31,16 +31,16 @@ module UstidnrValidator
 
       valid_ust_id_codes = [200, 222]
 
-      response_code = result['ErrorCode'].to_i
+      response_code = result["ErrorCode"].to_i
       errors.add :ust_id_nr, error_codes(response_code)            unless valid_ust_id_codes.include? response_code
-      errors.add :city,      result_codes(result['Erg_Ort'])       if result['Erg_Ort'].present? && result['Erg_Ort']   !=  'A'
-      errors.add :name,      result_codes(result['Erg_Name'])      if result['Erg_Name'].present? && result['Erg_Name'] != 'A'
+      errors.add :city,      result_codes(result["Erg_Ort"])       if result["Erg_Ort"].present? && result["Erg_Ort"] != "A"
+      errors.add :name,      result_codes(result["Erg_Name"])      if result["Erg_Name"].present? && result["Erg_Name"] != "A"
     end
 
     def self.build(params)
       Company.new.tap do |company|
-        params.each do |k,v|
-          company.send "#{k}=",v
+        params.each do |k, v|
+          company.send "#{k}=", v
         end
       end
     end
