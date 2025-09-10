@@ -5,5 +5,6 @@ gemspec
 
 group :development, :test do
   gem "base64"
+  gem "mutex_m"
   gem "konvenit_style", git: "git@github.com:konvenit/konvenit_style.git"
 end
