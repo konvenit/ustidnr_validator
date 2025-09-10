@@ -29,6 +29,7 @@ GEM
       tzinfo (~> 2.0)
     ast (2.4.3)
     base64 (0.3.0)
+    bigdecimal (3.2.3)
     concurrent-ruby (1.2.3)
     diff-lcs (1.5.1)
     i18n (1.14.7)
@@ -100,6 +101,7 @@ PLATFORMS
 
 DEPENDENCIES
   base64
+  bigdecimal
   bundler
   konvenit_style!
   mutex_m
