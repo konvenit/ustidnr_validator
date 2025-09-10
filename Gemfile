@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 # Specify your gem's dependencies in ustidnr_validator.gemspec
 gemspec
-
+gem "rexml", ">= 3.3.9"
 group :development, :test do
   gem "base64"
   gem "bigdecimal"
