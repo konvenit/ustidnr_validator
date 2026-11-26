@@ -7,7 +7,7 @@ describe UstidnrValidator::Company do
   let(:valid_reponse) { { "ErrorCode" => 200, "Erg_Ort" => "A", "Erg_Name" => "A" } }
 
   it "should looks like a rails model" do
-    company.should_not be_persisted
+    expect(company).not_to be_persisted
   end
 
   describe "validate" do
@@ -23,59 +23,59 @@ describe UstidnrValidator::Company do
     end
 
     it "should be valid wihout errors " do
-      company.stub(:validate).and_return true
-      company.should be_valid
+      allow(company).to receive(:validate).and_return true
+      expect(company).to be_valid
     end
 
     %w{ ust_id_nr name city}.each do |attr |
       it "should not be valid without an #{attr}" do
         company.send "#{attr}=", nil
-        company.stub(:validate).and_return true
-        company.should_not be_valid
+        allow(company).to receive(:validate).and_return true
+        expect(company).not_to be_valid
       end
     end
 
     it "should call the RpcClient " do
-      UstidnrValidator::RpcClient.stub(:fetch).with(heidelberg_company).and_return(valid_reponse)
-      company.should be_valid
+      allow(UstidnrValidator::RpcClient).to receive(:fetch).with(heidelberg_company).and_return(valid_reponse)
+      expect(company).to be_valid
     end
 
     it "should be valid for transition TLS 1.2 status " do
       transition_status = { "ErrorCode" => 222, "Erg_Ort" => "A", "Erg_Name" => "A" }
 
-      UstidnrValidator::RpcClient.stub(:fetch).with(heidelberg_company).and_return(transition_status)
+      allow(UstidnrValidator::RpcClient).to receive(:fetch).with(heidelberg_company).and_return(transition_status)
       expect(company).to be_valid
     end
 
     it "should call the RpcClient with print" do
       company.print = true
-      UstidnrValidator::RpcClient.stub(:fetch).with(hash_including(print: "ja")).and_return(valid_reponse)
-      company.should be_valid
+      allow(UstidnrValidator::RpcClient).to receive(:fetch).with(hash_including(print: "ja")).and_return(valid_reponse)
+      expect(company).to be_valid
     end
 
     it "should not be valid with ErrorCode not 200 " do
-      UstidnrValidator::RpcClient.stub(:fetch).with(anything).and_return(valid_reponse.merge("ErrorCode" => 201))
-      company.should_not be_valid
+      allow(UstidnrValidator::RpcClient).to receive(:fetch).with(anything).and_return(valid_reponse.merge("ErrorCode" => 201))
+      expect(company).not_to be_valid
     end
 
     it "should have valid error message ErrorCode not 200 " do
-      UstidnrValidator::RpcClient.stub(:fetch).with(anything).and_return(valid_reponse.merge("ErrorCode" => 201))
+      allow(UstidnrValidator::RpcClient).to receive(:fetch).with(anything).and_return(valid_reponse.merge("ErrorCode" => 201))
       company.valid?
-      company.errors.full_messages.join("\n").should match(/Die angefragte USt-IdNr. ist ungültig./)
+      expect(company.errors.full_messages.join("\n")).to match(/Die angefragte USt-IdNr. ist ungültig./)
     end
 
     %w{ Erg_Ort Erg_Name}.each do |attr |
       it "should not be valid with #{attr} not A " do
-        UstidnrValidator::RpcClient.stub(:fetch).with(anything).and_return(valid_reponse.merge(attr => "B"))
-        company.should_not be_valid
+        allow(UstidnrValidator::RpcClient).to receive(:fetch).with(anything).and_return(valid_reponse.merge(attr => "B"))
+        expect(company).not_to be_valid
       end
     end
 
     %w{ Erg_Ort Erg_Name}.each do |attr |
       it "should have the vaild error on #{attr}" do
-        UstidnrValidator::RpcClient.stub(:fetch).with(anything).and_return(valid_reponse.merge(attr => "B"))
+        allow(UstidnrValidator::RpcClient).to receive(:fetch).with(anything).and_return(valid_reponse.merge(attr => "B"))
         company.valid?
-        company.errors.full_messages.join("\n").should match(/stimmt nicht überein/)
+        expect(company.errors.full_messages.join("\n")).to match(/stimmt nicht überein/)
       end
     end
   end
