@@ -1,6 +1,11 @@
 require "spec_helper"
 
 RSpec.describe "Deprecation warnings in the specs" do
+  it "raises on an RSpec deprecation" do
+    expect { RSpec.deprecate("old matcher") }
+      .to raise_error(RSpec::Core::DeprecationError, /old matcher/)
+  end
+
   it "raises on a Ruby warning of the deprecated category" do
     expect { Warning.warn("old syntax", category: :deprecated) }
       .to raise_error(DeprecationWarningError, /old syntax/)
